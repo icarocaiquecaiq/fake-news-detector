@@ -8,8 +8,8 @@ export default function SocialAuthButtons({
     socialAuthButtons: TSocialAuthButton[];
 }) {
     return (
-        <div className="flex items-center gap-2">
-            Or continue with:
+        <div className="flex flex-col items-center gap-2 capitalize">
+            or continue with
             <div className="flex gap-2">
                 {socialAuthButtons.map((button) => (
                     <div key={button.name}>
