@@ -1,3 +1,4 @@
+import { PasswordInput } from "@/components/inputs/password-input";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -5,47 +6,51 @@ import {
     FormField,
     FormItem,
     FormLabel,
+    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+const usernameSchema = z
+    .string()
+    .trim()
+    .min(3, "Username must be at least 3 characters long.")
+    .max(50, "Username can’t be longer than 50 characters.")
+    .regex(
+        /^(?!\d+$)[a-zA-Z0-9._]+$/,
+        "Please use only letters, numbers, dots, or underscores, and include at least one letter.",
+    );
+
+const emailSchema = z
+    .string()
+    .trim()
+    .min(1, "This field is required.")
+    .max(254, "Email can’t be longer than 254 characters.")
+    .email("Enter a valid email address or username.");
+
 const formSchema = z.object({
-    userNameOrEmail: z.union([
-        z.string().min(1, "User name not found"),
-        z.string().email("Invalid email address"),
-    ]),
-    password: z.string().min(6, "Password must be at least 6 characters"),
+    userNameOrEmail: z.union([usernameSchema, emailSchema]),
+    password: z
+        .string()
+        .trim()
+        .min(8, "Password must be at least 8 characters long."),
 });
-
-export function LoginContentTitle() {
-    return (
-        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-            Login
-        </h4>
-    );
-}
-
-export function LoginContentDescription() {
-    return (
-        <p className="text-sm text-muted-foreground">
-            First time here? Create an account to get started!
-        </p>
-    );
-}
 
 export default function LoginForm() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             userNameOrEmail: "",
+            password: "",
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log("Login form submitted with values:");
-        console.log(values);
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        const result = formSchema.parse(values);
+
+        console.log("validated:", result);
     }
 
     return (
@@ -56,10 +61,15 @@ export default function LoginForm() {
                     name="userNameOrEmail"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Username</FormLabel>
+                            <FormLabel>Email or Username</FormLabel>
                             <FormControl>
-                                <Input placeholder="ex: johndoe" {...field} />
+                                <Input
+                                    {...field}
+                                    placeholder="ex: johndoe"
+                                    required
+                                />
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -68,15 +78,16 @@ export default function LoginForm() {
                     name="password"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>password</FormLabel>
+                            <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <PasswordInput {...field} required />
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="w-full">
-                    submit
+                <Button type="submit" className="w-full capitalize">
+                    log in
                 </Button>
             </form>
         </Form>
