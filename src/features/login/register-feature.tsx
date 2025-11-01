@@ -1,7 +1,4 @@
-import { GoogleLoginButton } from "@/components/buttons/google-buttons/google-login-button";
-import type { TSocialAuthButton } from "@/components/buttons/social-auth-buttons";
-import SocialAuthButtons from "@/components/buttons/social-auth-buttons";
-import { PasswordInput } from "@/components/inputs/password-input";
+import RegisterForm from "./components/register-form";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -11,80 +8,14 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Facebook, Twitter } from "lucide-react";
-import { useForm } from "react-hook-form";
-import z from "zod";
+import { PATHS } from "@/routes/paths";
+import { NavLink } from "react-router";
+import AuthPlatformsOptions from "./components/auth-platforms-options";
 
-const socialAuthButtons: TSocialAuthButton[] = [
-    {
-        element: "component",
-        name: "google",
-        icon: GoogleLoginButton,
-    },
-    {
-        element: "icon",
-        name: "twitter",
-        icon: Twitter,
-        variant: "ghost",
-    },
-    {
-        element: "icon",
-        name: "facebook",
-        icon: Facebook,
-        variant: "ghost",
-    },
-];
-
-const formScheme = z.object({
-    name: z
-        .string()
-        .trim()
-        .min(3, "at least 3 characters long.")
-        .max(50, "Name can’t be longer than 50 characters.")
-        .max(100, "Name can’t be longer than 50 characters."),
-    email: z
-        .string()
-        .trim()
-        .min(1, "This field is required.")
-        .max(254, "Email can’t be longer than 254 characters.")
-        .email("Enter a valid email address."),
-    password: z
-        .string()
-        .trim()
-        .min(8, "Password must be at least 8 characters long")
-        .max(50, "Password can’t be longer than 50 characters.")
-        .regex(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d\s]).{8,}$/,
-            "Password must include upper and lower case letters, a number, and a special character.",
-        ),
-});
-
-async function onSubmit(values: z.infer<typeof formScheme>) {
-    const result = formScheme.parse(values);
-    console.log("validated:", result);
-}
+const signUpPath = PATHS.auth.login;
 
 export function RegisterFeature() {
-    const form = useForm<z.infer<typeof formScheme>>({
-        resolver: zodResolver(formScheme),
-        defaultValues: {
-            name: "",
-            email: "",
-            password: "",
-        },
-    });
-
-    function signInContentTitle() {
+    function signUpContentTitle() {
         return (
             <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                 Sign Up
@@ -92,7 +23,7 @@ export function RegisterFeature() {
         );
     }
 
-    function signInContentDescription() {
+    function signUpContentDescription() {
         return (
             <p className="text-sm text-muted-foreground">
                 Already have an account?
@@ -100,78 +31,21 @@ export function RegisterFeature() {
         );
     }
     return (
-        <Card>
+        <Card className="w-3/5 m-auto flex">
             <CardHeader className="gap-0">
-                <CardTitle>{signInContentTitle()}</CardTitle>
+                <CardTitle>{signUpContentTitle()}</CardTitle>
                 <CardDescription className="flex items-center">
-                    <div>{signInContentDescription()}</div>
-                    <Button variant={"link"} className="px-1">
-                        Sign In
+                    <div>{signUpContentDescription()}</div>
+                    <Button asChild variant="link" size="sm" className="px-1">
+                        <NavLink to={signUpPath}>Sign In</NavLink>
                     </Button>
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-8"
-                    >
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Name</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            placeholder="name"
-                                            required
-                                        />
-                                    </FormControl>
-                                    <FormMessage></FormMessage>
-                                </FormItem>
-                            )}
-                        ></FormField>
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Email</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            placeholder="johndoe@gmail.com"
-                                            required
-                                        />
-                                    </FormControl>
-                                    <FormMessage></FormMessage>
-                                </FormItem>
-                            )}
-                        ></FormField>
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Password</FormLabel>
-                                    <PasswordInput
-                                        placeholder="teste"
-                                        {...field}
-                                    ></PasswordInput>
-                                    <FormMessage></FormMessage>
-                                </FormItem>
-                            )}
-                        ></FormField>
-                        <Button type="submit" className={"w-full capitalize"}>
-                            Sign In
-                        </Button>
-                    </form>
-                </Form>
+                <RegisterForm></RegisterForm>
             </CardContent>
             <CardFooter className="flex justify-center">
-                <SocialAuthButtons socialAuthButtons={socialAuthButtons} />
+                <AuthPlatformsOptions></AuthPlatformsOptions>
             </CardFooter>
         </Card>
     );

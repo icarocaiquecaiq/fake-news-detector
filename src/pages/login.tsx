@@ -1,9 +1,9 @@
-import { LoginFeature } from "@/features/login/index";
+import LoginFeature from "@/features/login/login-feature";
 
 function Login() {
     return (
         <>
-            <div className="w-125">
+            <div className="w-1/2 flex items-center">
                 <LoginFeature />
             </div>
         </>

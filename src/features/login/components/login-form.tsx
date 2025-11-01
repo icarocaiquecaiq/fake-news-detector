@@ -87,7 +87,7 @@ export default function LoginForm() {
                     )}
                 />
                 <Button type="submit" className="w-full capitalize">
-                    log in
+                    Sign in
                 </Button>
             </form>
         </Form>
