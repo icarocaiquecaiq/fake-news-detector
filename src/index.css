@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -35,8 +37,8 @@
     --sidebar-accent-foreground: oklch(0.375 0.1562 264.8475);
     --sidebar-border: oklch(0.9276 0.0058 264.5313);
     --sidebar-ring: oklch(0.645 0.246 16.439);
-    --font-sans: Inter, sans-serif;
-    --font-serif: Source Serif 4, serif;
+    --font-sans: "Roboto", sans-serif;
+    --font-serif: "Roboto Slab", serif;
     --font-mono: JetBrains Mono, monospace;
     --radius: 1rem;
     --shadow-2xs: 1px 1px 3px 0px hsl(0 0% 10.1961% / 0.05);
@@ -94,8 +96,8 @@
     --sidebar-accent-foreground: oklch(0.882 0.0588 253.9688);
     --sidebar-border: oklch(0.3811 0.0355 269.657);
     --sidebar-ring: oklch(0.586 0.253 17.585);
-    --font-sans: Inter, sans-serif;
-    --font-serif: Source Serif 4, serif;
+    --font-sans: "Roboto", sans-serif;
+    --font-serif: "Roboto Slab", serif;
     --font-mono: JetBrains Mono, monospace;
     --radius: 1rem;
     --shadow-2xs: 1px 1px 3px 0px hsl(0 0% 10.1961% / 0.05);

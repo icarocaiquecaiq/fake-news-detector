@@ -17,8 +17,8 @@ const signUpPath = PATHS.auth.login;
 export function RegisterFeature() {
     function signUpContentTitle() {
         return (
-            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                Sign Up
+            <h4 className="capitalize scroll-m-20 text-2xl font-serif font-semibold tracking-tight">
+                fake news detector
             </h4>
         );
     }

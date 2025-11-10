@@ -40,8 +40,8 @@ function LoginFeature() {
 
 export function LoginContentTitle() {
     return (
-        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-            Login
+        <h4 className="capitalize scroll-m-20 text-2xl font-serif font-semibold tracking-tight">
+            fake news detector
         </h4>
     );
 }
